@@ -1,7 +1,9 @@
-package com.example.demo;
+package com.example.demo.servlet;
 
 import com.example.demo.manager.CompanyManager;
+import com.example.demo.manager.EmployeeManager;
 import com.example.demo.model.Company;
+import com.example.demo.model.Employee;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,15 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(urlPatterns = "/companies")
-public class CompaniesServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/employees")
+public class EmployeesServlet extends HttpServlet {
 
-    private CompanyManager companyManager = new CompanyManager();
+    private EmployeeManager employeeManager = new EmployeeManager();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Company> companies = companyManager.getCompanies();
-        req.setAttribute("companies",companies);
-        req.getRequestDispatcher("WEB-INF/companies.jsp").forward(req,resp);
+        List<Employee> employees = employeeManager.getAll();
+        req.setAttribute("employees",employees);
+        req.getRequestDispatcher("/WEB-INF/employees.jsp").forward(req,resp);
     }
+
 }

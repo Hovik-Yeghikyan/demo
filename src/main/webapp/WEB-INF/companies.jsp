@@ -9,7 +9,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Companies</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <%
@@ -17,21 +18,23 @@
 
 %>
 
-Companies
+Companies | <a href="/addCompany">Add company</a>
 
 <table>
     <tr>
         <th>ID</th>
         <th>Name</th>
         <th>Address</th>
+        <th>Delete</th>
     </tr>
     <%
         if (!companies.isEmpty()) {
             for (Company company : companies) {%>
 <tr>
     <td><%=company.getId()%></td>
-    <td><%=company.getName()%></td>
+    <td><a href="/singleCompany?id=<%=company.getId()%>"><%=company.getName()%></a></td>
     <td><%=company.getAddress()%></td>
+    <td><a href="/deleteCompany?id=<%=company.getId()%>">Delete</a></td>
 </tr>
     <% }
     }
