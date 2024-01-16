@@ -23,6 +23,7 @@ public class EmployeeManager {
                         .name(resultSet.getString("name"))
                         .surname(resultSet.getString("surname"))
                         .email(resultSet.getString("email"))
+                        .picName(resultSet.getString("pic_name"))
                         .company(companyManager.getCompanyById(resultSet.getInt("company_id")))
                         .build());
             }
@@ -34,12 +35,13 @@ public class EmployeeManager {
     }
 
     public void add(Employee employee) {
-        String sql = "INSERT INTO employee(name,surname,email,company_id) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO employee(name,surname,email,company_id, pic_name) VALUES(?,?,?,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, employee.getName());
             preparedStatement.setString(2, employee.getSurname());
             preparedStatement.setString(3, employee.getEmail());
             preparedStatement.setInt(4, employee.getCompany().getId());
+            preparedStatement.setString(5, employee.getPicName());
             preparedStatement.executeUpdate();
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
@@ -72,6 +74,7 @@ public class EmployeeManager {
                         .name(resultSet.getString("name"))
                         .surname(resultSet.getString("surname"))
                         .email(resultSet.getString("email"))
+                        .picName(resultSet.getString("pic_name"))
                         .company(companyManager.getCompanyById(resultSet.getInt("company_id")))
                         .build());
             }

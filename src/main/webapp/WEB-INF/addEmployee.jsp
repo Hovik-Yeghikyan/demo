@@ -16,7 +16,7 @@
 <% List<Company> companies = (List<Company>) request.getAttribute("companies");%>
 
 Add Employee <br>
-<form method="post" action="/addEmployee">
+<form method="post" action="/addEmployee" enctype="multipart/form-data">
     Name: <input type="text" name="name"> <br>
     Surame: <input type="text" name="surname"> <br>
     Email: <input type="text" name="email"> <br>
@@ -30,7 +30,7 @@ Add Employee <br>
         <%}%>
 
     </select> <br>
-
+<input type="file" name="picture">
     <input type="submit" value="add">
 </form>
 </body>

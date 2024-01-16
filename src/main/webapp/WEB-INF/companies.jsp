@@ -20,21 +20,24 @@
 
 Companies | <a href="/addCompany">Add company</a>
 
-<table>
+<table border="1">
     <tr>
         <th>ID</th>
         <th>Name</th>
         <th>Address</th>
         <th>Delete</th>
+        <th>Update</th>
     </tr>
     <%
         if (!companies.isEmpty()) {
             for (Company company : companies) {%>
 <tr>
     <td><%=company.getId()%></td>
-    <td><a href="/singleCompany?id=<%=company.getId()%>"><%=company.getName()%></a></td>
+    <td><a href="/singleCompany?id=<%=company.getId()%>">
+        <%=company.getName()%></a></td>
     <td><%=company.getAddress()%></td>
     <td><a href="/deleteCompany?id=<%=company.getId()%>">Delete</a></td>
+    <td><a href="/updateCompany?id=<%=company.getId()%>">Update</a></td>
 </tr>
     <% }
     }
