@@ -2,6 +2,7 @@ package com.example.demo.servlet;
 
 import com.example.demo.manager.CompanyManager;
 import com.example.demo.model.Company;
+import com.example.demo.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,16 +19,19 @@ public class AddCompanyServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/addCompany.jsp").forward(req,resp);
+        req.getRequestDispatcher("/WEB-INF/addCompany.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        User user = (User) req.getSession().getAttribute("user");
         String companyName = req.getParameter("companyName");
         String companyAddress = req.getParameter("companyAddress");
+
         companyManager.add(Company.builder()
                 .address(companyAddress)
                 .name(companyName)
+                .user(user)
                 .build());
         resp.sendRedirect("/companies");
     }

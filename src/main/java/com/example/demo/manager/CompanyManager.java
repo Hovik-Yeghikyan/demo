@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CompanyManager {
-    Connection connection = DBConnectionProvider.getInstance().getConnection();
+    private Connection connection = DBConnectionProvider.getInstance().getConnection();
+    private UserManager userManager = new UserManager();
 
     public List<Company> getCompanies() {
         String sql = "SELECT * FROM company";
@@ -20,6 +21,7 @@ public class CompanyManager {
                         .id(resultSet.getInt("id"))
                         .name(resultSet.getString("name"))
                         .address(resultSet.getString("address"))
+                        .user(userManager.getUserById(resultSet.getInt("user_id")))
                         .build());
             }
         } catch (SQLException e) {
@@ -37,6 +39,7 @@ public class CompanyManager {
                         .id(resultSet.getInt("id"))
                         .name(resultSet.getString("name"))
                         .address(resultSet.getString("address"))
+                        .user(userManager.getUserById(resultSet.getInt("user_id")))
                         .build();
             }
         } catch (SQLException e) {
@@ -46,10 +49,11 @@ public class CompanyManager {
     }
 
     public void add(Company company) {
-        String sql = "INSERT INTO company(name,address) VALUES(?,?)";
+        String sql = "INSERT INTO company(name,address,user_id) VALUES(?,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, company.getName());
             preparedStatement.setString(2, company.getAddress());
+            preparedStatement.setInt(3, company.getUser().getId());
             preparedStatement.executeUpdate();
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
@@ -82,4 +86,6 @@ public class CompanyManager {
             e.printStackTrace();
         }
     }
+
+
 }
